@@ -16,9 +16,9 @@ public interface MySampleApplicationServiceAsync {
 
 	void listCustomerInfo(CustomerInfoQuery customerInfoQuery, PageInfoDTO<CustomerInfoQueryDTO> pageInfo, AsyncCallback<PageInfoDTO<CustomerInfoQueryDTO>> async);
 
-    void querySystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery, AsyncCallback<SystemAdminInfoQueryDTO> async);
+    void readSystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery, AsyncCallback<SystemAdminInfoQueryDTO> async);
 
-    void creatSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave, AsyncCallback<Boolean> async);
+    void saveSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave, AsyncCallback<Boolean> async);
 
 //	void listCustomerInfo(CustomerInfoQuery customerInfoQuery, PageInfoDTO<CustomerInfoQueryDTO> pageInfo, AsyncCallback<PageInfoDTO<CustomerInfoQueryDTO>> async);
 }

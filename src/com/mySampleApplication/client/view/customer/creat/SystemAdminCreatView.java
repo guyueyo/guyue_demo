@@ -4,12 +4,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.mySampleApplication.client.MySampleApplication;
 import com.mySampleApplication.client.MySampleApplicationService;
-import com.mySampleApplication.client.dto.CustomerInfoQuery;
+//import com.mySampleApplication.client.dto.CustomerInfoQuery;
 import com.mySampleApplication.client.dto.SystemAdminInfoQuery;
 import com.mySampleApplication.client.dto.SystemAdminInfoQueryDTO;
 import com.mySampleApplication.client.dto.SystemAdminInfoSave;
 import com.sencha.gxt.widget.core.client.ContentPanel;
-import com.sencha.gxt.widget.core.client.TabItemConfig;
+//import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.CenterLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
@@ -20,7 +20,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
 
 public class SystemAdminCreatView {
     private static SystemAdminInfoSave systemAdminInfoSave = new SystemAdminInfoSave();
-    private VBoxLayoutContainer vBoxLayoutContainer = new VBoxLayoutContainer();
+//    private VBoxLayoutContainer vBoxLayoutContainer = new VBoxLayoutContainer();
     private CenterLayoutContainer centerLayoutContainer = new CenterLayoutContainer();
 
     public CenterLayoutContainer getCenterLayoutContainer(){
@@ -107,7 +107,7 @@ public class SystemAdminCreatView {
                 systemAdminInfoSave.setEmail(email);
                 systemAdminInfoSave.setSafeQuestion(safeQuestion);
                 systemAdminInfoSave.setSafeAnswer(safeAnswer);
-                MySampleApplicationService.App.getInstance().querySystemAdminInfo(systemAdminInfoQuery,new SystemAdminQueryAsync());
+                MySampleApplicationService.App.getInstance().readSystemAdminInfo(systemAdminInfoQuery,new SystemAdminQueryAsync());
             }
         });
 
@@ -135,7 +135,7 @@ public class SystemAdminCreatView {
         return centerLayoutContainer;
     }
     private static void creatSystemAdminUser(SystemAdminInfoSave systemAdminInfoSave){
-        MySampleApplicationService.App.getInstance().creatSystemAdminInfo(systemAdminInfoSave,new SystemAdminSaveAsync());
+        MySampleApplicationService.App.getInstance().saveSystemAdminInfo(systemAdminInfoSave,new SystemAdminSaveAsync());
     }
     private static class SystemAdminSaveAsync implements AsyncCallback<Boolean> {
 

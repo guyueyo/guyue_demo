@@ -61,12 +61,12 @@ public class MySampleApplicationServiceImpl extends RemoteServiceServlet impleme
 
 	@Override
 	public SystemAdminInfoQueryDTO querySystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery) {
-		return systemAdminService.querySystemAdminInfo(systemAdminInfoQuery);
+		return systemAdminService.readSystemAdminInfo(systemAdminInfoQuery);
 	}
 
 	@Override
 	public Boolean creatSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave) {
-		return systemAdminService.creatSystemAdminInfo(systemAdminInfoSave);
+		return systemAdminService.saveSystemAdminInfo(systemAdminInfoSave);
 	}
 
 }

@@ -18,7 +18,7 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     private SystemAdminDao systemAdminDao;
 
     @Override
-    public SystemAdminInfoQueryDTO querySystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery) {
+    public SystemAdminInfoQueryDTO readSystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery) {
         SystemAdminInfo systemAdminInfo = new SystemAdminInfo();
         BeanUtils.copyProperties(systemAdminInfoQuery,systemAdminInfo);
         SystemAdminInfoQueryDTO systemAdminInfoQueryDTO = new SystemAdminInfoQueryDTO();
@@ -28,7 +28,7 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     }
 
     @Override
-    public Boolean creatSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave) {
+    public Boolean saveSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave) {
         SystemAdminInfo systemAdminInfo = new SystemAdminInfo();
         BeanUtils.copyProperties(systemAdminInfoSave,systemAdminInfo);
         return systemAdminDao.creatSystemAdminInfo(systemAdminInfo);

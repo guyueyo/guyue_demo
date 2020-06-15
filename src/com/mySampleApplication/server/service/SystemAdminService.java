@@ -6,8 +6,8 @@ import com.mySampleApplication.client.dto.SystemAdminInfoSave;
 
 
 public interface SystemAdminService {
-    SystemAdminInfoQueryDTO querySystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery);
+    SystemAdminInfoQueryDTO readSystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery);
 
-    Boolean creatSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave);
+    Boolean saveSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave);
 
 }

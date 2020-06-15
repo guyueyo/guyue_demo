@@ -19,9 +19,9 @@ public interface MySampleApplicationService extends RemoteService {
 
 	CustomerInfoSaveDTO saveCustomerInfo(CustomerInfoSave request);
 
-	SystemAdminInfoQueryDTO querySystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery);
+	SystemAdminInfoQueryDTO readSystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery);
 
-	Boolean creatSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave);
+	Boolean saveSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave);
 
 	/**
 	 * Utility/Convenience class.

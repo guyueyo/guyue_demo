@@ -33,7 +33,7 @@ public class SystemAdminDaoImpl implements SystemAdminDao {
 
 
     @Override
-    public SystemAdminInfo selectSystemAdminInoByUsernameOr(SystemAdminInfo systemAdminInfo) {
+    public SystemAdminInfo readSystemAdminInoByUsernameOr(SystemAdminInfo systemAdminInfo) {
         Conjunction conjunction = Restrictions.conjunction();
         if(systemAdminInfo.getUsername() !=null && !systemAdminInfo.getUsername().isEmpty()) conjunction.add(Restrictions.eq("username",systemAdminInfo.getUsername()));
         if(systemAdminInfo.getPassword() !=null && !systemAdminInfo.getPassword().isEmpty()) conjunction.add(Restrictions.eq("password",systemAdminInfo.getPassword()));
@@ -44,7 +44,7 @@ public class SystemAdminDaoImpl implements SystemAdminDao {
     }
 
     @Override
-    public Boolean creatSystemAdminInfo(SystemAdminInfo systemAdminInfo) {
+    public Boolean saveSystemAdminInfo(SystemAdminInfo systemAdminInfo) {
         this.getCurrentSession().save(systemAdminInfo);
         return true;
     }

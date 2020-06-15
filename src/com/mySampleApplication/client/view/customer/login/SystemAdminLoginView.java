@@ -61,7 +61,7 @@ public class SystemAdminLoginView {
                 if(password == null || password.isEmpty()){Info.display("警告","请输入密码");return;}
                 systemAdminInfoQuery.setUsername(username);
                 systemAdminInfoQuery.setPassword(password);
-                MySampleApplicationService.App.getInstance().querySystemAdminInfo(systemAdminInfoQuery,new SystemAdminLoginAsync());
+                MySampleApplicationService.App.getInstance().readSystemAdminInfo(systemAdminInfoQuery,new SystemAdminLoginAsync());
             }
         });
         TextButton buttonCreat = new TextButton("注册");

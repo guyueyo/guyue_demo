@@ -4,7 +4,7 @@ import com.mySampleApplication.server.model.SystemAdminInfo;
 
 public interface SystemAdminDao {
 
-    SystemAdminInfo selectSystemAdminInoByUsernameOr(SystemAdminInfo systemAdminInfo);
+    SystemAdminInfo readSystemAdminInoByUsernameOr(SystemAdminInfo systemAdminInfo);
 
-    Boolean creatSystemAdminInfo(SystemAdminInfo systemAdminInfo);
+    Boolean saveSystemAdminInfo(SystemAdminInfo systemAdminInfo);
 }
