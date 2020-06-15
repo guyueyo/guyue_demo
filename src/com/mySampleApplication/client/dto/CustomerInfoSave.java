@@ -3,6 +3,12 @@ package com.mySampleApplication.client.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ *
+ * message customer新增方法封装类
+ * creatBy guyue
+ * creatTime 2020/6
+ */
 
 public class CustomerInfoSave implements Serializable {
 	private String customerCode;// 客户代码

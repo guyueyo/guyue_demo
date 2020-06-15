@@ -6,6 +6,13 @@ import com.mySampleApplication.server.model.PageInfo;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ *
+ * message 翻页工具返回封装类
+ * creatBy guyue
+ * creatTime 2020/6
+ */
+
 public class PageInfoDTO<T> implements Serializable {
 
 

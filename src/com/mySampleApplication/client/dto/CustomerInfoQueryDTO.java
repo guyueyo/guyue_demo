@@ -3,6 +3,12 @@ package com.mySampleApplication.client.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ *
+ * message customer返回封装类
+ * creatBy guyue
+ * creatTime 2020/6
+ */
 
 public class CustomerInfoQueryDTO implements Serializable {
 	private Integer id;// 主键id

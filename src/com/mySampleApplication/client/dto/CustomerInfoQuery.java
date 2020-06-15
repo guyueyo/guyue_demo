@@ -2,6 +2,12 @@ package com.mySampleApplication.client.dto;
 
 import java.io.Serializable;
 
+/**
+ *
+ * message customer查询方法封装类
+ * creatBy guyue
+ * creatTime 2020/6
+ */
 
 public class CustomerInfoQuery implements Serializable {
 	private String customerCode;

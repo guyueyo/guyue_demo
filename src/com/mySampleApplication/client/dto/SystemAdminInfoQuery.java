@@ -2,6 +2,13 @@ package com.mySampleApplication.client.dto;
 
 import java.io.Serializable;
 
+/**
+ *
+ * message SystemAdmin查询封装类
+ * creatBy guyue
+ * creatTime 2020/6
+ */
+
 public class SystemAdminInfoQuery implements Serializable {
     private String username ;
 

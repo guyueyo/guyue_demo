@@ -2,6 +2,14 @@ package com.mySampleApplication.client.dto;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+/**
+ *
+ * message SystemAdmin查询返回封装类
+ * creatBy guyue
+ * creatTime 2020/6
+ */
+
+
 public class SystemAdminInfoQueryDTO implements IsSerializable {
 
     private int id ;

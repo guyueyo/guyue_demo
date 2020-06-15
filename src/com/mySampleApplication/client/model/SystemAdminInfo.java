@@ -1,5 +1,12 @@
 package com.mySampleApplication.client.model;
 
+/**
+ *
+ * message SystemAdmin模型类封装数据库信息
+ * creatBy guyue
+ * creatTime 2020/6
+ */
+
 public class SystemAdminInfo {
     private int id ;
 

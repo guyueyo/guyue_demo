@@ -2,6 +2,13 @@ package com.mySampleApplication.client.dto;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+/**
+ *
+ * message SystemAdmin新增方法封装类
+ * creatBy guyue
+ * creatTime 2020/6
+ */
+
 public class SystemAdminInfoSave implements IsSerializable {
     private int id ;
 

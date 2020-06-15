@@ -3,6 +3,12 @@ package com.mySampleApplication.client.dto;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ *
+ * message customer删除方法封装类
+ * creatBy guyue
+ * creatTime 2020/6
+ */
 
 public class CustomerInfoDelete  implements Serializable {
 	private List<Integer> ids;

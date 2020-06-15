@@ -5,6 +5,12 @@ import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
 
+/**
+ *
+ * message 数据模型绑定
+ * creatBy guyue
+ * creatTime 2020/6
+ */
 
 public interface CustomerInfoProperties extends PropertyAccess<CustomerInfo> {
 

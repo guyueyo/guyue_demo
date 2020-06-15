@@ -3,6 +3,12 @@ package com.mySampleApplication.client.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ *
+ * message Customer模型封装数据库信息
+ * creatBy guyue
+ * creatTime 2020/6
+ */
 
 public class CustomerInfo implements Serializable {
 	public CustomerInfo(){
