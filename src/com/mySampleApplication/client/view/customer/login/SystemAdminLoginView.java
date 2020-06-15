@@ -1,15 +1,20 @@
 package com.mySampleApplication.client.view.customer.login;
 
 import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.logging.client.DefaultLevel;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.KeyboardListener;
 import com.mySampleApplication.client.MySampleApplication;
 import com.mySampleApplication.client.MySampleApplicationService;
 import com.mySampleApplication.client.dto.SystemAdminInfoQuery;
 import com.mySampleApplication.client.dto.SystemAdminInfoQueryDTO;
+import com.mySampleApplication.client.model.style.CssStyleChange;
 import com.mySampleApplication.client.util.Utils;
 import com.mysql.cj.protocol.a.MysqlBinaryValueDecoder;
 import com.sencha.gxt.core.client.util.Margins;
@@ -35,38 +40,41 @@ public class SystemAdminLoginView {
     private VBoxLayoutContainer vBoxLayoutContainer = new VBoxLayoutContainer();
     private CenterLayoutContainer centerLayoutContainer = new CenterLayoutContainer();
 
+    private final TextField usernameTextField = new TextField();
+    private final PasswordField passwordTextField = new PasswordField();
+
 
     public CenterLayoutContainer getCenterLayoutContainer() {
-
+//        centerLayoutContainer.addAddHandler(new KeyboardListener().onKeyPress(){on})
+        centerLayoutContainer.setId("login");
         ContentPanel loginPanel = new ContentPanel();
         loginPanel.setHeading("登录界面");
-        final TextField usernameTextField = new TextField();
+
         usernameTextField.setWidth(200);
         final FieldLabel usernameCondition = new FieldLabel(usernameTextField, "请输入您的账号");
         usernameCondition.setLabelWidth(120);
 
-        final PasswordField passwordTextField = new PasswordField();
+
         passwordTextField.setWidth(200);
 
         final FieldLabel passwordFieldLabel = new FieldLabel(passwordTextField, "请输入您的密码");
         passwordFieldLabel.setLabelWidth(120);
-        TextButton buttonLogin = new TextButton("登录");
+        final TextButton buttonLogin = new TextButton("登录");
+        buttonLogin.setId("login_btn");
+        MySampleApplication.cssList.add(new CssStyleChange("success_btn","login_btn"));
         buttonLogin.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                SystemAdminInfoQuery systemAdminInfoQuery = new SystemAdminInfoQuery();
-                String username = usernameTextField.getValue();
-                String password = passwordTextField.getValue();
-                if(username == null || username.isEmpty()){Info.display("警告","请输入用户名");return;}
-                if(password == null || password.isEmpty()){Info.display("警告","请输入密码");return;}
-                systemAdminInfoQuery.setUsername(username);
-                systemAdminInfoQuery.setPassword(password);
-                MySampleApplicationService.App.getInstance().readSystemAdminInfo(systemAdminInfoQuery,new SystemAdminLoginAsync());
+                loginSystem();
             }
         });
+//        com-sencha-gxt-theme-triton-custom-client-button-TritonButtonCellToolBarAppearance-TritonButtonCellStyle-button
         TextButton buttonCreat = new TextButton("注册");
         buttonLogin.setSize("100","30");
         buttonCreat.setSize("100","30");
+        String buttonCreatId = "system_admin_creat_btn";
+        buttonCreat.setId(buttonCreatId);
+        MySampleApplication.cssList.add(new CssStyleChange("warn_btn",buttonCreatId));
         buttonCreat.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
@@ -80,9 +88,18 @@ public class SystemAdminLoginView {
         vBoxLayoutContainer.setWidth(500);
         loginPanel.add(vBoxLayoutContainer);
         centerLayoutContainer.add(loginPanel);
-
-
         return centerLayoutContainer;
+    }
+
+    private void loginSystem (){
+        SystemAdminInfoQuery systemAdminInfoQuery = new SystemAdminInfoQuery();
+        String username = usernameTextField.getValue();
+        String password = passwordTextField.getValue();
+        if(username == null || username.isEmpty()){Info.display("警告","请输入用户名");return;}
+        if(password == null || password.isEmpty()){Info.display("警告","请输入密码");return;}
+        systemAdminInfoQuery.setUsername(username);
+        systemAdminInfoQuery.setPassword(password);
+        MySampleApplicationService.App.getInstance().readSystemAdminInfo(systemAdminInfoQuery,new SystemAdminLoginAsync());
     }
 
 

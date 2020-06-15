@@ -1,0 +1,71 @@
+.success_btn{
+    border-radius: 16px;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: #4CAF50;;
+    box-sizing: border-box;
+    height: 100%;
+    background: #4CAF50;;
+    padding: 0px 0px 0px 0px;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.failed_btn{
+    border-radius: 16px;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: #f44336;;
+    box-sizing: border-box;
+    height: 100%;
+    background: #f44336;;
+    padding: 0px 0px 0px 0px;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.common_btn{
+    border-radius: 16px;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: #008CBA;;
+    box-sizing: border-box;
+    height: 100%;
+    background: #008CBA;;
+    padding: 0px 0px 0px 0px;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.disable_btn{
+     border-radius: 16px;
+     border-width: 1px 1px 1px 1px;
+     border-style: solid;
+     border-color: #555555;
+     box-sizing: border-box;
+     height: 100%;
+     background: #555555;
+     padding: 0px 0px 0px 0px;
+     outline: none;
+     white-space: nowrap;
+     overflow: hidden;
+     opacity: 0.6;
+     cursor: not-allowed;
+ }
+.warn_btn{
+    border-radius: 16px;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: #e6a23c;;
+    box-sizing: border-box;
+    height: 100%;
+    background: #e6a23c;;
+    padding: 0px 0px 0px 0px;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+}

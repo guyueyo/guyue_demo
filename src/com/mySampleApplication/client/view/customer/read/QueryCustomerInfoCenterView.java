@@ -8,6 +8,7 @@ import com.mySampleApplication.client.dto.CustomerInfoDelete;
 import com.mySampleApplication.client.dto.CustomerInfoQuery;
 import com.mySampleApplication.client.model.CustomerInfo;
 import com.mySampleApplication.client.model.CustomerInfoProperties;
+import com.mySampleApplication.client.model.style.CssStyleChange;
 import com.mySampleApplication.client.view.customer.update.UpdateCustomerInfoView;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
@@ -74,6 +75,9 @@ public class QueryCustomerInfoCenterView {
 			// 新增按钮
 			TextButton btnSave = new TextButton("新增");
 			btnSave.setSize("80","30");
+			String btnSaveId = "customer_save_btn";
+			btnSave.setId(btnSaveId);
+			MySampleApplication.cssList.add(new CssStyleChange("success_btn",btnSaveId));
 			btnSave.addSelectHandler(new SelectEvent.SelectHandler() {
 				@Override
 				public void onSelect(SelectEvent event) {
@@ -83,6 +87,9 @@ public class QueryCustomerInfoCenterView {
 			//删除按钮
 			TextButton btnDelete = new TextButton("删除");
 			btnDelete.setSize("80", "30");
+			String btnDeleteId = "customer_delete_btn";
+			btnDelete.setId(btnDeleteId);
+			MySampleApplication.cssList.add(new CssStyleChange("failed_btn",btnDeleteId));
 			btnDelete.addSelectHandler(
 					new SelectEvent.SelectHandler() {
 				@Override
@@ -111,6 +118,9 @@ public class QueryCustomerInfoCenterView {
 			});
 			//修改按钮
 			TextButton btnUpdate = new TextButton("修改");
+			String btnUpdateId = "customer_update_btn";
+			btnUpdate.setId(btnUpdateId);
+			MySampleApplication.cssList.add(new CssStyleChange("warn_btn",btnUpdateId));
 			btnUpdate.setSize("80","30");
 			btnUpdate.addSelectHandler(new SelectEvent.SelectHandler() {
 				@Override
