@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="guyue_demo:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/guyue_demo_Web_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="guyue_demo" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="D:/gwt/gwt-2.7.0/gwt-2.7.0/gwt-servlet.jar" />
+          <element id="library" level="project" name="jar" />
+        </element>
+      </element>
+      <element id="gwt-compiler-output" facet="guyue_demo/gwt/GWT" />
+      <element id="javaee-facet-resources" facet="guyue_demo/web/Web" />
+    </root>
+  </artifact>
+</component>
