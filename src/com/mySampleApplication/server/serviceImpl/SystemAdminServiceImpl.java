@@ -22,7 +22,7 @@ public class SystemAdminServiceImpl implements SystemAdminService {
         SystemAdminInfo systemAdminInfo = new SystemAdminInfo();
         BeanUtils.copyProperties(systemAdminInfoQuery,systemAdminInfo);
         SystemAdminInfoQueryDTO systemAdminInfoQueryDTO = new SystemAdminInfoQueryDTO();
-        SystemAdminInfo systemAdminInfoDTO = systemAdminDao.selectSystemAdminInoByUsernameOr(systemAdminInfo);
+        SystemAdminInfo systemAdminInfoDTO = systemAdminDao.readSystemAdminInoByUsernameOr(systemAdminInfo);
         if(systemAdminInfoDTO!=null) BeanUtils.copyProperties(systemAdminInfoDTO,systemAdminInfoQueryDTO);
         return systemAdminInfoQueryDTO;
     }
@@ -31,7 +31,7 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     public Boolean saveSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave) {
         SystemAdminInfo systemAdminInfo = new SystemAdminInfo();
         BeanUtils.copyProperties(systemAdminInfoSave,systemAdminInfo);
-        return systemAdminDao.creatSystemAdminInfo(systemAdminInfo);
+        return systemAdminDao.saveSystemAdminInfo(systemAdminInfo);
     }
 
 }

@@ -109,11 +109,9 @@ public class SystemAdminLoginView {
             quitButton.addSelectHandler(new SelectEvent.SelectHandler() {
                 @Override
                 public void onSelect(SelectEvent event) {
-//                    MySampleApplication.loginSystemAdmin();
                     MySampleApplication.panel.setActiveWidget(MySampleApplication.cardLayout);
                     MySampleApplication.panel.remove(quitButton);
                     MySampleApplication.loginSystemAdmin();
-//                    MySampleApplication.panel.set
                 }
             });
 
