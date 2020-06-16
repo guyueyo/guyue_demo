@@ -21,9 +21,9 @@ import com.sencha.gxt.widget.core.client.info.Info;
 public class SystemAdminCreatView {
     private static SystemAdminInfoSave systemAdminInfoSave = new SystemAdminInfoSave();
 //    private VBoxLayoutContainer vBoxLayoutContainer = new VBoxLayoutContainer();
-    private CenterLayoutContainer centerLayoutContainer = new CenterLayoutContainer();
+    private CenterLayoutContainer centerLtWidget = new CenterLayoutContainer();
 
-    public CenterLayoutContainer getCenterLayoutContainer(){
+    public CenterLayoutContainer getCenterLtWidget(){
         final ContentPanel contentPanel = new ContentPanel();
         contentPanel.setHeading("注册界面");
         FlexTable table = new FlexTable();
@@ -31,47 +31,47 @@ public class SystemAdminCreatView {
         table.setCellSpacing(15);
         table.setCellPadding(0);
 
-        final TextField usernameTextField = new TextField();
-        usernameTextField.setWidth(200);
-        final FieldLabel usernameFieldLabel = new FieldLabel(usernameTextField, "请输入您的账号");
-        usernameFieldLabel.setLabelWidth(140);
+        final TextField tdUsername = new TextField();
+        tdUsername.setWidth(200);
+        final FieldLabel flbUsername = new FieldLabel(tdUsername, "请输入您的账号");
+        flbUsername.setLabelWidth(140);
 
-        final TextField passwordTextField = new TextField();
-        passwordTextField.setWidth(200);
-        final FieldLabel passwordFieldLabel = new FieldLabel(passwordTextField, "请输入您的密码");
-        passwordFieldLabel.setLabelWidth(140);
+        final TextField tdPassword = new TextField();
+        tdPassword.setWidth(200);
+        final FieldLabel flbPassword = new FieldLabel(tdPassword, "请输入您的密码");
+        flbPassword.setLabelWidth(140);
 
-        final TextField rePasswordTextField = new TextField();
-        rePasswordTextField.setWidth(200);
-        final FieldLabel rePasswordFieldLabel = new FieldLabel(rePasswordTextField, "请确认您的密码");
-        rePasswordFieldLabel.setLabelWidth(140);
+        final TextField tdRePassword = new TextField();
+        tdRePassword.setWidth(200);
+        final FieldLabel flbRePassword = new FieldLabel(tdRePassword, "请确认您的密码");
+        flbRePassword.setLabelWidth(140);
 
-        final TextField emailTextField = new TextField();
-        emailTextField.setWidth(200);
-        final FieldLabel emailFieldLabel = new FieldLabel(emailTextField, "请输入您的电子邮箱");
-        emailFieldLabel.setLabelWidth(140);
+        final TextField tdEmail = new TextField();
+        tdEmail.setWidth(200);
+        final FieldLabel flbEmail = new FieldLabel(tdEmail, "请输入您的电子邮箱");
+        flbEmail.setLabelWidth(140);
 
-        final TextField safeQuestionTextField = new TextField();
-        safeQuestionTextField.setWidth(200);
-        final FieldLabel safeQuestionFieldLabel = new FieldLabel(safeQuestionTextField, "请输入您安全问题");
-        safeQuestionFieldLabel.setLabelWidth(140);
+        final TextField tdSafeQuestion = new TextField();
+        tdSafeQuestion.setWidth(200);
+        final FieldLabel flbSafeQuestion = new FieldLabel(tdSafeQuestion, "请输入您安全问题");
+        flbSafeQuestion.setLabelWidth(140);
 
-        final TextField safeAnswerTextField = new TextField();
-        safeAnswerTextField.setWidth(200);
-        final FieldLabel safeAnswerFieldLabel = new FieldLabel(safeAnswerTextField, "请输入您安全答案");
-        safeAnswerFieldLabel.setLabelWidth(140);
+        final TextField tdSafeAnswer = new TextField();
+        tdSafeAnswer.setWidth(200);
+        final FieldLabel flbSafeAnswer = new FieldLabel(tdSafeAnswer, "请输入您安全答案");
+        flbSafeAnswer.setLabelWidth(140);
 
-        TextButton creatBtn = new TextButton("注册");
-        creatBtn.setSize("120","32");
-        creatBtn.addSelectHandler(new SelectEvent.SelectHandler() {
+        TextButton btnCreat = new TextButton("注册");
+        btnCreat.setSize("120","32");
+        btnCreat.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                String username = usernameTextField.getValue();
-                String password = passwordTextField.getValue();
-                String rePassword = rePasswordTextField.getValue();
-                String email = emailTextField.getValue();
-                String safeQuestion = safeQuestionTextField.getValue();
-                String safeAnswer = safeAnswerTextField.getValue();
+                String username = tdUsername.getValue();
+                String password = tdPassword.getValue();
+                String rePassword = tdRePassword.getValue();
+                String email = tdEmail.getValue();
+                String safeQuestion = tdSafeQuestion.getValue();
+                String safeAnswer = tdSafeAnswer.getValue();
                 if(username==null||username.isEmpty()){
                     Info.display("警告","请输入账号!");
                     return;
@@ -111,28 +111,28 @@ public class SystemAdminCreatView {
             }
         });
 
-        TextButton backBtn = new TextButton("返回");
-        backBtn.setSize("120","32");
-        backBtn.addSelectHandler(new SelectEvent.SelectHandler() {
+        TextButton btnBack = new TextButton("返回");
+        btnBack.setSize("120","32");
+        btnBack.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
                 MySampleApplication.loginSystemAdmin();
             }
         });
-        table.setWidget(0,0,usernameFieldLabel);
-        table.setWidget(1,0,passwordFieldLabel);
-        table.setWidget(2,0,rePasswordFieldLabel);
-        table.setWidget(3,0,emailFieldLabel);
-        table.setWidget(4,0,safeQuestionFieldLabel);
-        table.setWidget(5,0,safeAnswerFieldLabel);
-        table.setWidget(6,0,creatBtn);
-        table.setWidget(6,1,backBtn);
+        table.setWidget(0,0,flbUsername);
+        table.setWidget(1,0,flbPassword);
+        table.setWidget(2,0,flbRePassword);
+        table.setWidget(3,0,flbEmail);
+        table.setWidget(4,0,flbSafeQuestion);
+        table.setWidget(5,0,flbSafeAnswer);
+        table.setWidget(6,0,btnCreat);
+        table.setWidget(6,1,btnBack);
 
 //        contentPanel.add(usernameFieldLabel);
         contentPanel.add(table);
-        centerLayoutContainer.add(contentPanel);
+        centerLtWidget.add(contentPanel);
 
-        return centerLayoutContainer;
+        return centerLtWidget;
     }
     private static void creatSystemAdminUser(SystemAdminInfoSave systemAdminInfoSave){
         MySampleApplicationService.App.getInstance().saveSystemAdminInfo(systemAdminInfoSave,new SystemAdminSaveAsync());
@@ -160,13 +160,11 @@ public class SystemAdminCreatView {
         @Override
         public void onFailure(Throwable caught) {
             Info.display("失败", "服务器繁忙请稍后再试!");
-//            return;
         }
 
         @Override
         public void onSuccess(SystemAdminInfoQueryDTO result) {
             if (result.getUsername() == null) {
-//                Info.display("成功", "当前用户名可用!");
             creatSystemAdminUser(systemAdminInfoSave);
             return;
             }

@@ -1,17 +1,22 @@
 package com.mySampleApplication.client.view.customer.read;
 
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.mySampleApplication.client.MySampleApplication;
 import com.mySampleApplication.client.MySampleApplicationService;
 import com.mySampleApplication.client.dto.CustomerInfoDelete;
 import com.mySampleApplication.client.dto.CustomerInfoQuery;
+import com.mySampleApplication.client.dto.CustomerInfoQueryDTO;
 import com.mySampleApplication.client.model.CustomerInfo;
 import com.mySampleApplication.client.model.CustomerInfoProperties;
+import com.mySampleApplication.client.model.loader.CustomerLoader;
 import com.mySampleApplication.client.model.style.CssStyleChange;
 import com.mySampleApplication.client.view.customer.update.UpdateCustomerInfoView;
 import com.sencha.gxt.core.client.util.Margins;
+import com.sencha.gxt.data.client.loader.RpcProxy;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.loader.*;
 import com.sencha.gxt.state.client.GridStateHandler;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer;
@@ -23,6 +28,7 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
+import com.sencha.gxt.widget.core.client.toolbar.PagingToolBar;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -35,11 +41,36 @@ public class QueryCustomerInfoCenterView {
 	private VerticalLayoutContainer verticalLtCenter;
 	private GridStateHandler<CustomerInfo> gridStateHandler;
 
+	public static final int PAGE_SIZE=15;
+
+	public static CustomerLoader loader = null;
+
 	public VerticalLayoutContainer getVerticalLtCenter() {
 
 		if (verticalLtCenter == null) {
 			//复选框选择模型
 			CheckBoxSelectionModel<CustomerInfo> chkSelectionModel = new CheckBoxSelectionModel<CustomerInfo>();
+
+
+
+			RpcProxy<PagingLoadConfig, PagingLoadResult<CustomerInfo>> rpxProxy = new RpcProxy<PagingLoadConfig, PagingLoadResult<CustomerInfo>>()
+            {
+				@Override
+				public void load(PagingLoadConfig loadConfig, final AsyncCallback<PagingLoadResult<CustomerInfo>> callback)
+                {
+                    CustomerInfoQuery request = new QueryCustomerInfoView().getRequest(QueryCustomerInfoView.tdRequest);
+//                    Info.display("title",request.getCustomerCode());
+				    //后台分页
+					MySampleApplicationService.App.getInstance().listCustomerInfoLimit(request,loadConfig,callback);
+					//前端分页
+//                    MySampleApplicationService.App.getInstance().listCustomerInfo(loadConfig.getOffset(),loadConfig.getLimit(),callback);
+				}
+			};
+
+            loader = new CustomerLoader(rpxProxy);
+			loader.setRemoteSort(true);
+			loader.addLoadHandler(new LoadResultListStoreBinding<PagingLoadConfig, CustomerInfo, PagingLoadResult<CustomerInfo>>(store));
+
 
 			ColumnConfig<CustomerInfo, String> columnCustomerCode = new ColumnConfig<CustomerInfo, String>(props.customerCode(), 50, "客户代码");
 			ColumnConfig<CustomerInfo, String> columnCustomerName = new ColumnConfig<CustomerInfo, String>(props.customerName(), 50, "客户名称");
@@ -61,7 +92,8 @@ public class QueryCustomerInfoCenterView {
 			columnList.add(columnEmail);
 			columnList.add(columnEnableTag);
 
-			final Grid<CustomerInfo> gridCustomerInfo = new Grid<CustomerInfo>(store, new ColumnModel(columnList));
+			ColumnModel<CustomerInfo> columnModel = new ColumnModel(columnList);
+			final Grid<CustomerInfo> gridCustomerInfo = new Grid<CustomerInfo>(store, columnModel);
 			//设置选择模型
 			gridCustomerInfo.setSelectionModel(chkSelectionModel);
 			gridCustomerInfo.setAllowTextSelection(false);
@@ -71,6 +103,15 @@ public class QueryCustomerInfoCenterView {
 			gridCustomerInfo.setColumnReordering(true);
 			gridCustomerInfo.setStateful(true);
 			gridCustomerInfo.setStateId("gridStateExample");
+			gridCustomerInfo.setLoader(loader);
+
+			final PagingToolBar toolBarPageControl = new PagingToolBar(PAGE_SIZE);
+            toolBarPageControl.setBorders(false);
+			toolBarPageControl.bind(loader);
+
+
+
+
 			verticalLtCenter = new VerticalLayoutContainer();
 			// 新增按钮
 			TextButton btnSave = new TextButton("新增");
@@ -82,6 +123,7 @@ public class QueryCustomerInfoCenterView {
 				@Override
 				public void onSelect(SelectEvent event) {
 					MySampleApplication.save();
+                    loader.load();
 				}
 			});
 			//删除按钮
@@ -102,16 +144,17 @@ public class QueryCustomerInfoCenterView {
 						List<Integer> ids = new ArrayList<>();
 						for (CustomerInfo customerInfo : models){
 							ids.add(customerInfo.getId());
-							Info.display("序号", ""+store.indexOf(customerInfo));
+//							Info.display("序号", ""+store.indexOf(customerInfo));
 //							store.remove(store.indexOf(customerInfo));
 						}
 						request.setIds(ids);
 						MySampleApplicationService.App.getInstance().deleteCustomerInfo(request,new CustomerDeleteAsyncCallback());
-						{
-							CustomerInfoQuery customerInfoQuery = new CustomerInfoQuery();
-							MySampleApplication.pageInfoDTO.setTotalNum(MySampleApplication.pageInfoDTO.getTotalNum()-1);
-							MySampleApplicationService.App.getInstance().listCustomerInfo(customerInfoQuery, MySampleApplication.pageInfoDTO,new QueryCustomerInfoView.CustomerQueryWithPageLimitAsyncCallBack());
-						}
+						loader.load();
+//						{
+//							CustomerInfoQuery customerInfoQuery = new CustomerInfoQuery();
+//							MySampleApplication.pageInfoDTO.setTotalNum(MySampleApplication.pageInfoDTO.getTotalNum()-1);
+//							MySampleApplicationService.App.getInstance().listCustomerInfo(customerInfoQuery, MySampleApplication.pageInfoDTO,new QueryCustomerInfoView.CustomerQueryWithPageLimitAsyncCallBack());
+//						}
 //						MySampleApplication.back();
 					}
 				}
@@ -162,9 +205,10 @@ public class QueryCustomerInfoCenterView {
 			hboxLtBtn.add(btnDelete, new BoxLayoutContainer.BoxLayoutData(new Margins(5,0,0,20)));
 			verticalLtCenter.add(hboxLtBtn);
 			verticalLtCenter.add(gridCustomerInfo, new VerticalLayoutContainer.VerticalLayoutData(1, 1));
+			verticalLtCenter.add(toolBarPageControl, new VerticalLayoutContainer.VerticalLayoutData(1, -1));
 
 			gridStateHandler = new GridStateHandler<CustomerInfo>(gridCustomerInfo);
-
+			loader.load();
 		}
 		gridStateHandler.loadState();
 		return verticalLtCenter;
@@ -190,4 +234,79 @@ public class QueryCustomerInfoCenterView {
 		}
 
 	}
+
+	private static class customerQueryLimitAsyncCallback implements  AsyncCallback<PagingLoadResult<CustomerInfoQueryDTO>>{
+        @Override
+        public void onFailure(Throwable caught) {
+//            Info.display("");
+        }
+
+        @Override
+        public void onSuccess(PagingLoadResult<CustomerInfoQueryDTO> result) {
+            QueryCustomerInfoCenterView.store.clear();
+            List<CustomerInfo> customerInfoList = new ArrayList<>();
+            if(result.getData() != null && !result.getData().isEmpty()){
+                for (int i = result.getOffset();i<result.getOffset()+5;i++){
+                    CustomerInfoQueryDTO rsp = result.getData().get(i);
+                    CustomerInfo customerInfo = new CustomerInfo();
+                    customerInfo.setAddress(rsp.getAddress());
+                    customerInfo.setPhone(rsp.getPhone());
+                    customerInfo.setId(rsp.getId());
+                    customerInfo.setCustomerCode(rsp.getCustomerCode());
+                    customerInfo.setCustomerName(rsp.getCustomerName());
+                    customerInfo.setCustomerType(rsp.getCustomerType());
+                    customerInfo.setEmail(rsp.getEmail());
+                    customerInfo.setEnableTag(rsp.getEnableTag());
+                    customerInfo.setFax(rsp.getFax());
+                    customerInfo.setBirth(rsp.getBirth());
+                    customerInfo.setMnemonicCode(rsp.getMnemonicCode());
+                    customerInfo.setBank(rsp.getBank());
+                    customerInfo.setBankAcount(rsp.getBankAcount());
+                    customerInfo.setCompany(rsp.getCompany());
+                    customerInfo.setMonthlyDate(rsp.getMonthlyDate());
+                    customerInfo.setPostCode(rsp.getPostCode());
+                    customerInfo.setRemark(rsp.getRemark());
+                    customerInfo.setSettlementDate(rsp.getSettlementDate());
+                    customerInfo.setSettlementMethod(rsp.getSettlementMethod());
+                    customerInfoList.add(customerInfo);
+                }
+            }
+            QueryCustomerInfoCenterView.store.addAll(customerInfoList);
+        }
+    }
+
+    private PagingLoadResult<CustomerInfo> pagingLoadResultCustomerInfo(PagingLoadResult<CustomerInfoQueryDTO> pagingLoadResult){
+	    return new PagingLoadResultBean<CustomerInfo>(customerInfoQueryDTO2CustomerInfo(pagingLoadResult.getData()),pagingLoadResult.getTotalLength(),pagingLoadResult.getOffset());
+    }
+
+    private List<CustomerInfo> customerInfoQueryDTO2CustomerInfo(List<CustomerInfoQueryDTO> result){
+        List<CustomerInfo> customerInfoList = new ArrayList<>();
+        if(result != null && !result.isEmpty()){
+            for (CustomerInfoQueryDTO rsp : result){
+//                CustomerInfoQueryDTO rsp = result.getData().get(i);
+                CustomerInfo customerInfo = new CustomerInfo();
+                customerInfo.setAddress(rsp.getAddress());
+                customerInfo.setPhone(rsp.getPhone());
+                customerInfo.setId(rsp.getId());
+                customerInfo.setCustomerCode(rsp.getCustomerCode());
+                customerInfo.setCustomerName(rsp.getCustomerName());
+                customerInfo.setCustomerType(rsp.getCustomerType());
+                customerInfo.setEmail(rsp.getEmail());
+                customerInfo.setEnableTag(rsp.getEnableTag());
+                customerInfo.setFax(rsp.getFax());
+                customerInfo.setBirth(rsp.getBirth());
+                customerInfo.setMnemonicCode(rsp.getMnemonicCode());
+                customerInfo.setBank(rsp.getBank());
+                customerInfo.setBankAcount(rsp.getBankAcount());
+                customerInfo.setCompany(rsp.getCompany());
+                customerInfo.setMonthlyDate(rsp.getMonthlyDate());
+                customerInfo.setPostCode(rsp.getPostCode());
+                customerInfo.setRemark(rsp.getRemark());
+                customerInfo.setSettlementDate(rsp.getSettlementDate());
+                customerInfo.setSettlementMethod(rsp.getSettlementMethod());
+                customerInfoList.add(customerInfo);
+            }
+        }
+        return customerInfoList;
+    }
 }

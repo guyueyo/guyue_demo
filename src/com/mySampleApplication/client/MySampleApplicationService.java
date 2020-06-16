@@ -4,6 +4,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.mySampleApplication.client.dto.*;
+import com.mySampleApplication.client.model.CustomerInfo;
+import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
+import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 
 import java.util.List;
 
@@ -19,9 +22,14 @@ public interface MySampleApplicationService extends RemoteService {
 
 	CustomerInfoSaveDTO saveCustomerInfo(CustomerInfoSave request);
 
+	PagingLoadResult<CustomerInfo> listCustomerInfoLimit(CustomerInfoQuery customerInfoQuery,PagingLoadConfig request);
+
 	SystemAdminInfoQueryDTO readSystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery);
 
 	Boolean saveSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave);
+
+    PagingLoadResult<CustomerInfo> listCustomerInfo(int offset,int limit);
+
 
 	/**
 	 * Utility/Convenience class.

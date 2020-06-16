@@ -1,8 +1,10 @@
 package com.mySampleApplication.server.daoImpl;
 
+import com.mySampleApplication.client.dto.CustomerInfoQuery;
 import com.mySampleApplication.server.dao.CustomerDao;
 import com.mySampleApplication.server.model.CustomerInfo;
 import com.mySampleApplication.server.model.SystemAdminInfo;
+import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -111,6 +113,55 @@ public class CustomerDaoImpl implements CustomerDao {
 		map.put("total",total);
 		map.put("data",criteria.list());
 		return map;
+	}
+
+	@Override
+	public List<CustomerInfo> listByCustomerInfo(CustomerInfo customerInfo,PagingLoadConfig pagingLoadConfig) {
+		Disjunction disjunction = Restrictions.disjunction();
+		if (customerInfo.getCustomerCode() != null && !customerInfo.getCustomerCode().isEmpty()){
+			// 客户代码
+			Criterion customerCode = Restrictions.eq("customerCode",customerInfo.getCustomerCode());
+			disjunction.add(customerCode);
+		}
+		if (customerInfo.getCustomerName() != null && !customerInfo.getCustomerName().isEmpty()){
+			// 客户名称
+			Criterion customerName = Restrictions.eq("customerName",customerInfo.getCustomerName());
+			disjunction.add(customerName);
+		}
+		if (customerInfo.getMnemonicCode() != null && !customerInfo.getMnemonicCode().isEmpty()){
+			// 助记码
+			Criterion mnemonicCode = Restrictions.eq("mnemonicCode",customerInfo.getMnemonicCode());
+			disjunction.add(mnemonicCode);
+		}
+		Criteria criteria = this.getCurrentSession().createCriteria(CustomerInfo.class);
+		criteria.add(disjunction);
+		criteria.setFirstResult(pagingLoadConfig.getOffset());
+		criteria.setMaxResults(pagingLoadConfig.getLimit());
+		return criteria.list();
+	}
+
+	@Override
+	public int countListByCustomer(CustomerInfo customerInfo) {
+		Disjunction disjunction = Restrictions.disjunction();
+		if (customerInfo.getCustomerCode() != null && !customerInfo.getCustomerCode().isEmpty()){
+			// 客户代码
+			Criterion customerCode = Restrictions.eq("customerCode",customerInfo.getCustomerCode());
+			disjunction.add(customerCode);
+		}
+		if (customerInfo.getCustomerName() != null && !customerInfo.getCustomerName().isEmpty()){
+			// 客户名称
+			Criterion customerName = Restrictions.eq("customerName",customerInfo.getCustomerName());
+			disjunction.add(customerName);
+		}
+		if (customerInfo.getMnemonicCode() != null && !customerInfo.getMnemonicCode().isEmpty()){
+			// 助记码
+			Criterion mnemonicCode = Restrictions.eq("mnemonicCode",customerInfo.getMnemonicCode());
+			disjunction.add(mnemonicCode);
+		}
+		Criteria criteria = this.getCurrentSession().createCriteria(CustomerInfo.class);
+		criteria.add(disjunction);
+		return Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
+//		return
 	}
 
 

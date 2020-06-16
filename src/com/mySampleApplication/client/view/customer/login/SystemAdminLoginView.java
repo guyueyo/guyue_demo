@@ -37,64 +37,63 @@ import com.sencha.gxt.widget.core.client.info.Info;
 
 public class SystemAdminLoginView {
 
-    private VBoxLayoutContainer vBoxLayoutContainer = new VBoxLayoutContainer();
-    private CenterLayoutContainer centerLayoutContainer = new CenterLayoutContainer();
+    private VBoxLayoutContainer vBoxLtWidget = new VBoxLayoutContainer();
+    private CenterLayoutContainer centerLtWidget = new CenterLayoutContainer();
 
-    private final TextField usernameTextField = new TextField();
-    private final PasswordField passwordTextField = new PasswordField();
+    private final TextField tdUsername = new TextField();
+    private final PasswordField tdPassword = new PasswordField();
 
 
-    public CenterLayoutContainer getCenterLayoutContainer() {
+    public CenterLayoutContainer getCenterLtWidget() {
 //        centerLayoutContainer.addAddHandler(new KeyboardListener().onKeyPress(){on})
-        centerLayoutContainer.setId("login");
-        ContentPanel loginPanel = new ContentPanel();
-        loginPanel.setHeading("登录界面");
+        centerLtWidget.setId("login");
+        ContentPanel panelLogin = new ContentPanel();
+        panelLogin.setHeading("登录界面");
 
-        usernameTextField.setWidth(200);
-        final FieldLabel usernameCondition = new FieldLabel(usernameTextField, "请输入您的账号");
-        usernameCondition.setLabelWidth(120);
+        tdUsername.setWidth(200);
+        final FieldLabel flbUsername = new FieldLabel(tdUsername, "请输入您的账号");
+        flbUsername.setLabelWidth(120);
+        
+        tdPassword.setWidth(200);
 
-
-        passwordTextField.setWidth(200);
-
-        final FieldLabel passwordFieldLabel = new FieldLabel(passwordTextField, "请输入您的密码");
-        passwordFieldLabel.setLabelWidth(120);
-        final TextButton buttonLogin = new TextButton("登录");
-        buttonLogin.setId("login_btn");
-        MySampleApplication.cssList.add(new CssStyleChange("success_btn","login_btn"));
-        buttonLogin.addSelectHandler(new SelectEvent.SelectHandler() {
+        final FieldLabel flbPassword = new FieldLabel(tdPassword, "请输入您的密码");
+        flbPassword.setLabelWidth(120);
+        final TextButton btnLogin = new TextButton("登录");
+        btnLogin.setId("btnLogin");
+        MySampleApplication.cssList.add(new CssStyleChange("success_btn","btnLogin"));
+        btnLogin.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
                 loginSystem();
             }
         });
 //        com-sencha-gxt-theme-triton-custom-client-button-TritonButtonCellToolBarAppearance-TritonButtonCellStyle-button
-        TextButton buttonCreat = new TextButton("注册");
-        buttonLogin.setSize("100","30");
-        buttonCreat.setSize("100","30");
-        String buttonCreatId = "system_admin_creat_btn";
-        buttonCreat.setId(buttonCreatId);
-        MySampleApplication.cssList.add(new CssStyleChange("warn_btn",buttonCreatId));
-        buttonCreat.addSelectHandler(new SelectEvent.SelectHandler() {
+        TextButton btnCreat = new TextButton("注册");
+        btnLogin.setSize("100","30");
+        btnCreat.setSize("100","30");
+        String btnCreatId = "btnSystemAdminCreat";
+        btnCreat.setId(btnCreatId);
+        MySampleApplication.cssList.add(new CssStyleChange("warn_btn",btnCreatId));
+        btnCreat.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
                 MySampleApplication.creatSystemAdmin();
             }
         });
-        vBoxLayoutContainer.add(usernameCondition, new BoxLayoutContainer.BoxLayoutData(new Margins(50,0,0,0)));
-        vBoxLayoutContainer.add(passwordFieldLabel);
-        vBoxLayoutContainer.add(buttonLogin,new BoxLayoutContainer.BoxLayoutData(new Margins(20,0,0,100)));
-        vBoxLayoutContainer.add(buttonCreat,new BoxLayoutContainer.BoxLayoutData(new Margins(20,0,0,100)));
-        vBoxLayoutContainer.setWidth(500);
-        loginPanel.add(vBoxLayoutContainer);
-        centerLayoutContainer.add(loginPanel);
-        return centerLayoutContainer;
+        vBoxLtWidget.add(flbUsername, new BoxLayoutContainer.BoxLayoutData(new Margins(50,0,0,0)));
+        vBoxLtWidget.add(flbPassword);
+        vBoxLtWidget.add(btnLogin,new BoxLayoutContainer.BoxLayoutData(new Margins(20,0,0,100)));
+        vBoxLtWidget.add(btnCreat,new BoxLayoutContainer.BoxLayoutData(new Margins(20,0,0,100)));
+        vBoxLtWidget.setWidth(500);
+        panelLogin.add(vBoxLtWidget);
+        centerLtWidget.add(panelLogin);
+        return centerLtWidget;
     }
 
     private void loginSystem (){
         SystemAdminInfoQuery systemAdminInfoQuery = new SystemAdminInfoQuery();
-        String username = usernameTextField.getValue();
-        String password = passwordTextField.getValue();
+        String username = tdUsername.getValue();
+        String password = tdPassword.getValue();
         if(username == null || username.isEmpty()){Info.display("警告","请输入用户名");return;}
         if(password == null || password.isEmpty()){Info.display("警告","请输入密码");return;}
         systemAdminInfoQuery.setUsername(username);
@@ -119,23 +118,23 @@ public class SystemAdminLoginView {
             MySampleApplication.back();
             Info.display("登录成功","尊敬的<"+result.getUsername()+">用户,欢迎您回来!");
 
-            final TextButton quitButton = new TextButton("退出");
-            quitButton.setSize("150","32");
-            TabItemConfig config = MySampleApplication.panel.getConfig(MySampleApplication.cardLayout);
+            final TextButton btnQuit = new TextButton("退出");
+            btnQuit.setSize("150","32");
+            TabItemConfig config = MySampleApplication.tPanel.getConfig(MySampleApplication.cardLayout);
             config.setText("当前用户<"+result.getUsername()+">:");
-            quitButton.addSelectHandler(new SelectEvent.SelectHandler() {
+            btnQuit.addSelectHandler(new SelectEvent.SelectHandler() {
                 @Override
                 public void onSelect(SelectEvent event) {
-                    MySampleApplication.panel.setActiveWidget(MySampleApplication.cardLayout);
-                    MySampleApplication.panel.remove(quitButton);
+                    MySampleApplication.tPanel.setActiveWidget(MySampleApplication.cardLayout);
+                    MySampleApplication.tPanel.remove(btnQuit);
                     MySampleApplication.loginSystemAdmin();
                 }
             });
 
 
-            MySampleApplication.panel.add(quitButton,config);
+            MySampleApplication.tPanel.add(btnQuit,config);
 
-//            MySampleApplication.panel.addButton(quitButton);
+//            MySampleApplication.panel.addButton(btnQuit);
         }
     }
 }

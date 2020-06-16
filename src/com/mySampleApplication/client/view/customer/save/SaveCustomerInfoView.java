@@ -16,6 +16,7 @@ import com.mySampleApplication.client.model.SettlementMethod;
 import com.mySampleApplication.client.model.SettlementMethodProperties;
 import com.mySampleApplication.client.model.data.CustomerTypeData;
 import com.mySampleApplication.client.model.data.SettlementMethodData;
+import com.mySampleApplication.client.view.customer.read.QueryCustomerInfoCenterView;
 import com.mySampleApplication.client.view.customer.read.QueryCustomerInfoView;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
@@ -74,7 +75,8 @@ public class SaveCustomerInfoView {
 				public void onSelect(SelectEvent event) {
 					CustomerInfoSave request = validate();
 					if (request != null){
-						MySampleApplicationService.App.getInstance().saveCustomerInfo(request,new CustomerSaveAsyncCallback());
+						QueryCustomerInfoCenterView.loader.load();
+//						MySampleApplicationService.App.getInstance().saveCustomerInfo(request,new CustomerSaveAsyncCallback());
 					}
 				}
 			});
@@ -84,10 +86,11 @@ public class SaveCustomerInfoView {
 
 				@Override
 				public void onSelect(SelectEvent event) {
-					{
-						CustomerInfoQuery customerInfoQuery = new CustomerInfoQuery();
-						MySampleApplicationService.App.getInstance().listCustomerInfo(customerInfoQuery, MySampleApplication.pageInfoDTO,new QueryCustomerInfoView.CustomerQueryWithPageLimitAsyncCallBack());
-					}
+					QueryCustomerInfoCenterView.loader.load();
+//					{
+//						CustomerInfoQuery customerInfoQuery = new CustomerInfoQuery();
+//						MySampleApplicationService.App.getInstance().listCustomerInfo(customerInfoQuery, MySampleApplication.pageInfoDTO,new QueryCustomerInfoView.CustomerQueryWithPageLimitAsyncCallBack());
+//					}
 					MySampleApplication.back();
 				}
 			});

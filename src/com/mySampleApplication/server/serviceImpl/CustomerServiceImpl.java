@@ -5,6 +5,9 @@ import com.mySampleApplication.server.dao.CustomerDao;
 import com.mySampleApplication.server.model.CustomerInfo;
 import com.mySampleApplication.server.model.SystemAdminInfo;
 import com.mySampleApplication.server.service.CustomerService;
+import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
+import com.sencha.gxt.data.shared.loader.PagingLoadResult;
+import com.sencha.gxt.data.shared.loader.PagingLoadResultBean;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,6 +95,45 @@ public class CustomerServiceImpl implements CustomerService {
 		return null;
 	}
 
+	@Override
+	public PagingLoadResult<com.mySampleApplication.client.model.CustomerInfo> listCustomerInfoLimit(CustomerInfoQuery customerInfoQuery,PagingLoadConfig pagingLoadConfig) {
+		CustomerInfo customerInfoQ = new CustomerInfo();
+		BeanUtils.copyProperties(customerInfoQuery, customerInfoQ);
+		List<CustomerInfo> customerInfoList = customerDao.listByCustomerInfo(customerInfoQ,pagingLoadConfig);
+
+		List<com.mySampleApplication.client.model.CustomerInfo> response = new ArrayList<>();
+		if (customerInfoList != null && !customerInfoList.isEmpty()){
+			for (CustomerInfo tmp : customerInfoList){
+				com.mySampleApplication.client.model.CustomerInfo customerInfo = new com.mySampleApplication.client.model.CustomerInfo();
+				BeanUtils.copyProperties(tmp, customerInfo);
+				response.add(customerInfo);
+			}
+			int totalNum = customerDao.countListByCustomer(customerInfoQ);
+			return new PagingLoadResultBean<com.mySampleApplication.client.model.CustomerInfo>(response,totalNum,pagingLoadConfig.getOffset());
+		} else {
+			return null;
+		}
+	}
+
+    @Override
+    public PagingLoadResult<com.mySampleApplication.client.model.CustomerInfo> listCustomerInfo(int offset,int limit) {
+        CustomerInfo customerInfoQuery = new CustomerInfo();
+		List<CustomerInfo> customerInfoList = customerDao.listByCustomerInfoOr(customerInfoQuery);
+		List<com.mySampleApplication.client.model.CustomerInfo> response = new ArrayList<>();
+		if(customerInfoList!=null && !customerInfoList.isEmpty()){
+			for (int i =0;i<limit;i++){
+				if(i+offset<customerInfoList.size()) {
+					CustomerInfo tmp = customerInfoList.get(i + offset);
+					com.mySampleApplication.client.model.CustomerInfo customerInfo = new com.mySampleApplication.client.model.CustomerInfo();
+					BeanUtils.copyProperties(tmp, customerInfo);
+					response.add(customerInfo);
+				}
+			}
+            return new PagingLoadResultBean<com.mySampleApplication.client.model.CustomerInfo>(response,customerInfoList.size(),offset);
+        } else {
+            return null;
+        }
+    }
 
 
 }

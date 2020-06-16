@@ -5,9 +5,12 @@ import com.mySampleApplication.client.MySampleApplicationService;
 import com.mySampleApplication.client.dto.*;
 //import com.mySampleApplication.server.model.PageInfo;
 import com.mySampleApplication.client.dto.PageInfoDTO;
+import com.mySampleApplication.client.model.CustomerInfo;
 import com.mySampleApplication.server.model.PageInfo;
 import com.mySampleApplication.server.service.CustomerService;
 import com.mySampleApplication.server.service.SystemAdminService;
+import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
+import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -60,6 +63,11 @@ public class MySampleApplicationServiceImpl extends RemoteServiceServlet impleme
 	}
 
 	@Override
+	public PagingLoadResult<CustomerInfo> listCustomerInfoLimit(CustomerInfoQuery customerInfoQuery,PagingLoadConfig request) {
+		return customerService.listCustomerInfoLimit(customerInfoQuery,request);
+	}
+
+	@Override
 	public SystemAdminInfoQueryDTO readSystemAdminInfo(SystemAdminInfoQuery systemAdminInfoQuery) {
 		return systemAdminService.readSystemAdminInfo(systemAdminInfoQuery);
 	}
@@ -68,5 +76,10 @@ public class MySampleApplicationServiceImpl extends RemoteServiceServlet impleme
 	public Boolean saveSystemAdminInfo(SystemAdminInfoSave systemAdminInfoSave) {
 		return systemAdminService.saveSystemAdminInfo(systemAdminInfoSave);
 	}
+
+    @Override
+    public PagingLoadResult<com.mySampleApplication.client.model.CustomerInfo> listCustomerInfo(int offset,int limit) {
+        return customerService.listCustomerInfo(offset,limit);
+    }
 
 }

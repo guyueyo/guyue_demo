@@ -11,6 +11,7 @@ import com.mySampleApplication.client.dto.CustomerInfoUpdate;
 import com.mySampleApplication.client.model.*;
 import com.mySampleApplication.client.model.data.CustomerTypeData;
 import com.mySampleApplication.client.model.data.SettlementMethodData;
+import com.mySampleApplication.client.view.customer.read.QueryCustomerInfoCenterView;
 import com.mySampleApplication.client.view.customer.read.QueryCustomerInfoView;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
@@ -67,10 +68,11 @@ public class UpdateCustomerInfoView {
 					CustomerInfoUpdate request = validate();
 					if (request != null){
 						MySampleApplicationService.App.getInstance().updateCustomerInfo(request,new CustomerUpdateAsyncCallback());
-						{
-							CustomerInfoQuery customerInfoQuery = new CustomerInfoQuery();
-							MySampleApplicationService.App.getInstance().listCustomerInfo(customerInfoQuery, MySampleApplication.pageInfoDTO,new QueryCustomerInfoView.CustomerQueryWithPageLimitAsyncCallBack());
-						}
+						QueryCustomerInfoCenterView.loader.load();
+//						{
+//							CustomerInfoQuery customerInfoQuery = new CustomerInfoQuery();
+//							MySampleApplicationService.App.getInstance().listCustomerInfo(customerInfoQuery, MySampleApplication.pageInfoDTO,new QueryCustomerInfoView.CustomerQueryWithPageLimitAsyncCallBack());
+//						}
 						MySampleApplication.back();
 					}
 				}
