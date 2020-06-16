@@ -68,6 +68,8 @@ public class QueryCustomerInfoView {
 				public void onSelect(SelectEvent event) {
 					tdRequest = tdCondition;
 					MySampleApplication.pageInfoDTO.setCurrentPage(1);
+
+					//own page controller
 //					MySampleApplicationService.App.getInstance().listCustomerInfo(getRequest(tdCondition), MySampleApplication.pageInfoDTO, new CustomerQueryWithPageLimitAsyncCallBack());
 
 //					MySampleApplicationService.App.getInstance().listCustomerInfo(getRequest(tdCondition),new QueryCustomerInfoView.CustomerQueryAsyncCallback());
@@ -83,7 +85,7 @@ public class QueryCustomerInfoView {
 			hboxLtNorth.add(flbCondition);
 
 
-
+			//own page controller
 //			TextButton btnLastPage = new TextButton("上一页");
 //			btnLastPage.setSize("80","30");
 //			btnLastPage.addSelectHandler(new SelectEvent.SelectHandler() {

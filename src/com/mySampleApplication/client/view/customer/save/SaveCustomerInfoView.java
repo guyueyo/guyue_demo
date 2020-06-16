@@ -87,6 +87,7 @@ public class SaveCustomerInfoView {
 				@Override
 				public void onSelect(SelectEvent event) {
 					QueryCustomerInfoCenterView.loader.load();
+					//own page controller
 //					{
 //						CustomerInfoQuery customerInfoQuery = new CustomerInfoQuery();
 //						MySampleApplicationService.App.getInstance().listCustomerInfo(customerInfoQuery, MySampleApplication.pageInfoDTO,new QueryCustomerInfoView.CustomerQueryWithPageLimitAsyncCallBack());

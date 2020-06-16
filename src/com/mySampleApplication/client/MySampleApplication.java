@@ -54,11 +54,11 @@ public class MySampleApplication implements EntryPoint {
 		verticalLtUpdateCustomerInfoView = new UpdateCustomerInfoView().getVerticalLtWidget();
         centerLtSystemAdminLogin = new SystemAdminLoginView().getCenterLtWidget();
         centerLtCreatSystemAdmin = new SystemAdminCreatView().getCenterLtWidget();
-        cardLayout.add(borderLtQueryCustomerInfoView);
+//        cardLayout.add(borderLtQueryCustomerInfoView);
 
 		cardLayout.add(centerLtSystemAdminLogin);
 		cardLayout.add(centerLtCreatSystemAdmin);
-//        cardLayout.add(borderLtQueryCustomerInfoView);
+        cardLayout.add(borderLtQueryCustomerInfoView);
 		cardLayout.add(verticalLtSaveCustomerInfoView);
 		cardLayout.add(verticalLtUpdateCustomerInfoView);
 		cardLayout.setHeight(700);
